@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=69.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "resume-screening-ranking-system"
+version = "0.1.0"
+description = "Terminal-based resume screening and candidate ranking system using NLP and machine learning."
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+    { name = "Resume Screening Project" }
+]
+dependencies = [
+    "pymupdf",
+    "spacy",
+    "sentence-transformers",
+    "scikit-learn",
+    "numpy",
+    "pandas",
+    "joblib",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+]
+
+[tool.setuptools]
+py-modules = ["main", "config"]
+packages = ["parser", "nlp", "ml", "utils"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+

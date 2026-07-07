@@ -1,0 +1,9 @@
+pymupdf
+spacy
+sentence-transformers
+scikit-learn
+numpy
+pandas
+joblib
+pytest
+tqdm
