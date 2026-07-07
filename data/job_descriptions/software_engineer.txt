@@ -1,0 +1,32 @@
+Software Engineer
+
+Required Skills
+Python, Java, SQL, Git, Docker, PostgreSQL
+
+Preferred Skills
+AWS, MongoDB, React, FastAPI
+
+Education
+Bachelor's degree in Software Engineering, Computer Science, or related field
+
+Certifications
+Scrum certification or AWS certification is a plus
+
+Programming Languages
+Python, Java, SQL
+
+Frameworks
+FastAPI, React
+
+Tools
+Git, Docker, PostgreSQL, AWS, MongoDB
+
+Responsibilities
+- Design and implement maintainable software services
+- Write tests and participate in code reviews
+- Collaborate with cross-functional product teams
+
+Qualifications
+- 3+ years of software engineering experience
+- Strong debugging and software design skills
+

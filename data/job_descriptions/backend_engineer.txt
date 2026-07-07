@@ -1,0 +1,32 @@
+Backend Engineer
+
+Required Skills
+Python, FastAPI, Django, PostgreSQL, Docker, Git, AWS
+
+Preferred Skills
+MongoDB, Linux, Kubernetes, API monitoring
+
+Education
+Bachelor's degree in Computer Science, Software Engineering, or related field
+
+Certifications
+AWS Certified Developer is preferred
+
+Programming Languages
+Python, SQL
+
+Frameworks
+FastAPI, Django
+
+Tools
+PostgreSQL, Docker, Git, AWS, MongoDB, Linux
+
+Responsibilities
+- Build reliable backend APIs and document processing services
+- Improve database performance and service observability
+- Collaborate with product and analytics teams
+
+Qualifications
+- 4+ years of backend engineering experience
+- Strong understanding of REST APIs and relational databases
+

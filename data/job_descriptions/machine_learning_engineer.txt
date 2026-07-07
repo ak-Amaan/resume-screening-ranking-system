@@ -1,0 +1,32 @@
+Machine Learning Engineer
+
+Required Skills
+Python, Machine Learning, PyTorch, TensorFlow, Docker, Kubernetes, MLOps
+
+Preferred Skills
+Spark, Airflow, AWS, Git
+
+Education
+Bachelor's degree or Master's degree in Computer Science, Statistics, or related field
+
+Certifications
+AWS Certified Machine Learning is preferred
+
+Programming Languages
+Python, SQL
+
+Frameworks
+PyTorch, TensorFlow, Spark
+
+Tools
+Docker, Kubernetes, Airflow, AWS, Git
+
+Responsibilities
+- Deploy machine learning services into production
+- Build feature pipelines and monitor model quality
+- Improve model serving reliability and latency
+
+Qualifications
+- 5+ years of machine learning engineering experience
+- Experience with containerized ML systems
+

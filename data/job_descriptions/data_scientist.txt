@@ -1,0 +1,32 @@
+Data Scientist
+
+Required Skills
+Python, SQL, Machine Learning, Statistics, Pandas, NumPy, scikit-learn
+
+Preferred Skills
+NLP, Tableau, AWS, Data Visualization
+
+Education
+Master's degree in Statistics, Computer Science, Data Science, or related field
+
+Certifications
+TensorFlow Developer Certificate or AWS Certified Machine Learning preferred
+
+Programming Languages
+Python, SQL
+
+Frameworks
+scikit-learn, TensorFlow
+
+Tools
+Tableau, AWS, Excel
+
+Responsibilities
+- Build predictive models and communicate insights to stakeholders
+- Create reusable analysis workflows and model evaluation reports
+- Partner with engineering teams to operationalize models
+
+Qualifications
+- 4+ years of data science experience
+- Strong statistical modeling and experimentation skills
+

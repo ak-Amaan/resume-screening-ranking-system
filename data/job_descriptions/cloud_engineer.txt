@@ -1,0 +1,31 @@
+Cloud Engineer
+
+Required Skills
+AWS, Azure, Docker, Kubernetes, Linux, Terraform, Python
+
+Preferred Skills
+PostgreSQL, MongoDB, Git, Jenkins
+
+Education
+Bachelor's degree in Computer Science, Information Technology, or related field
+
+Certifications
+AWS Certified Solutions Architect or Azure certification preferred
+
+Programming Languages
+Python, Bash
+
+Frameworks
+
+Tools
+AWS, Azure, Docker, Kubernetes, Linux, Terraform, Jenkins, Git
+
+Responsibilities
+- Design secure and scalable cloud infrastructure
+- Automate deployment workflows and operational runbooks
+- Support application teams with cloud reliability practices
+
+Qualifications
+- 5+ years of cloud engineering experience
+- Strong infrastructure automation experience
+

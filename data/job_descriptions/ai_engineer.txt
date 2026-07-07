@@ -1,0 +1,32 @@
+AI Engineer
+
+Required Skills
+Python, NLP, Deep Learning, PyTorch, scikit-learn, NumPy, AWS
+
+Preferred Skills
+spaCy, PyMuPDF, MLOps, Docker
+
+Education
+Master's degree in Artificial Intelligence, Computer Science, or related field
+
+Certifications
+Deep Learning Specialization Certificate preferred
+
+Programming Languages
+Python
+
+Frameworks
+PyTorch, scikit-learn, spaCy
+
+Tools
+AWS, Docker, PyMuPDF
+
+Responsibilities
+- Build semantic search and information extraction systems
+- Evaluate deep learning models for production AI workflows
+- Collaborate with research and platform teams
+
+Qualifications
+- 3+ years of AI engineering experience
+- Strong background in NLP and model evaluation
+

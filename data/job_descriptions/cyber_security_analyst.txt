@@ -1,0 +1,31 @@
+Cyber Security Analyst
+
+Required Skills
+Cyber Security, Network Security, SIEM, Linux, Python, SQL
+
+Preferred Skills
+AWS, Docker, incident response, threat detection
+
+Education
+Bachelor's degree in Cyber Security, Computer Science, or related field
+
+Certifications
+CISSP, Security+, or cloud security certification preferred
+
+Programming Languages
+Python, SQL
+
+Frameworks
+
+Tools
+SIEM, Linux, AWS, Docker
+
+Responsibilities
+- Monitor security events and investigate suspicious activity
+- Build scripts to automate detection and reporting workflows
+- Document incident response findings
+
+Qualifications
+- 3+ years of cyber security operations experience
+- Understanding of network security and cloud environments
+

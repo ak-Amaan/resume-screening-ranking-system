@@ -1,0 +1,32 @@
+DevOps Engineer
+
+Required Skills
+Docker, Kubernetes, Jenkins, Terraform, Linux, Git, AWS
+
+Preferred Skills
+Python, Airflow, Spark, monitoring
+
+Education
+Bachelor's degree in Computer Science, Engineering, or equivalent experience
+
+Certifications
+Certified Kubernetes Application Developer preferred
+
+Programming Languages
+Python, Bash
+
+Frameworks
+Spark
+
+Tools
+Docker, Kubernetes, Jenkins, Terraform, Linux, Git, AWS, Airflow
+
+Responsibilities
+- Build CI/CD pipelines and deployment automation
+- Maintain container orchestration infrastructure
+- Improve system reliability and release quality
+
+Qualifications
+- 4+ years of DevOps or platform engineering experience
+- Strong Linux and cloud infrastructure skills
+

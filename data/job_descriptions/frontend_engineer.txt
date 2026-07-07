@@ -1,0 +1,32 @@
+Frontend Engineer
+
+Required Skills
+JavaScript, TypeScript, React, Git, Data Visualization
+
+Preferred Skills
+Python, Tableau, API integration, accessibility
+
+Education
+Bachelor's degree in Computer Science, Design Technology, or related field
+
+Certifications
+Scrum certification is a plus
+
+Programming Languages
+JavaScript, TypeScript, Python
+
+Frameworks
+React
+
+Tools
+Git, Tableau
+
+Responsibilities
+- Build responsive user interfaces for analytics products
+- Translate product requirements into maintainable frontend components
+- Partner with backend engineers on API contracts
+
+Qualifications
+- 3+ years of frontend engineering experience
+- Strong JavaScript and React fundamentals
+

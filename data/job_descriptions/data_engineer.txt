@@ -1,0 +1,32 @@
+Data Engineer
+
+Required Skills
+Python, SQL, Spark, Airflow, Hadoop, PostgreSQL, AWS
+
+Preferred Skills
+Docker, Kubernetes, Pandas, Data Visualization
+
+Education
+Bachelor's degree in Computer Science, Data Engineering, or related field
+
+Certifications
+AWS data analytics certification preferred
+
+Programming Languages
+Python, SQL
+
+Frameworks
+Spark
+
+Tools
+Airflow, Hadoop, PostgreSQL, AWS, Docker, Kubernetes
+
+Responsibilities
+- Build reliable batch and streaming data pipelines
+- Model data for analytics and machine learning consumers
+- Improve data quality checks and orchestration workflows
+
+Qualifications
+- 4+ years of data engineering experience
+- Strong SQL, distributed processing, and workflow orchestration skills
+
