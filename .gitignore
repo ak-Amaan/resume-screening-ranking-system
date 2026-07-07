@@ -30,6 +30,10 @@ output/*
 !data/generated/.gitkeep
 !models/.gitkeep
 !output/.gitkeep
+!data/generated/synthetic_training_data.csv
+!models/model.pkl
+!output/rankings.csv
+!output/feature_importance.png
 
 # Notebooks
 .ipynb_checkpoints/
@@ -38,4 +42,3 @@ output/*
 .DS_Store
 .idea/
 .vscode/
-

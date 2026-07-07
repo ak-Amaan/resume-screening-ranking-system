@@ -85,13 +85,13 @@ def create_feature_vector(
 
 def _experience_match_score(candidate_years: float, required_years: float) -> float:
     if required_years <= 0:
-        return 1.0
+        return 0.0
     return min(candidate_years / required_years, 1.0)
 
 
 def _education_match_score(resume: Resume, job_description: JobDescription) -> float:
     if not job_description.education:
-        return 1.0
+        return 0.0
 
     resume_text = " ".join(
         f"{education.degree} {education.institution}" for education in resume.education
@@ -109,7 +109,7 @@ def _education_match_score(resume: Resume, job_description: JobDescription) -> f
 
 def _certification_match_score(resume: Resume, job_description: JobDescription) -> float:
     if not job_description.certifications:
-        return 1.0
+        return 0.0
 
     resume_certs = [certification.name for certification in resume.certifications]
     return _match_percentage(resume_certs, job_description.certifications)
@@ -131,7 +131,7 @@ def _project_relevance_score(resume: Resume, job_description: JobDescription) ->
 
 def _match_percentage(candidate_values: list[str], required_values: list[str]) -> float:
     if not required_values:
-        return 1.0
+        return 0.0
     return len(_matching_items(candidate_values, required_values)) / len(_dedupe(required_values))
 
 
@@ -148,7 +148,7 @@ def _matching_items(candidate_values: list[str], required_values: list[str]) -> 
 def _keyword_coverage(text: str, keywords: list[str]) -> float:
     unique_keywords = _dedupe(keywords)
     if not unique_keywords:
-        return 1.0
+        return 0.0
 
     text_lower = text.lower()
     matches = [

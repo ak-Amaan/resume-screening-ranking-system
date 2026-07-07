@@ -1,54 +1,89 @@
 # Resume Screening and Ranking System Using NLP and Machine Learning
 
-## Overview
+![Python 3.13](https://img.shields.io/badge/Python-3.13-blue)
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Random%20Forest-green)
+![NLP](https://img.shields.io/badge/NLP-Sentence%20Transformers-purple)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 
-This project is a terminal-only AI/ML pipeline for screening PDF resumes against job descriptions. It will extract resume text, parse candidate attributes, compute semantic similarity with Sentence Transformers, engineer ranking features, and train a Random Forest Regressor on synthetic resume/job-description data.
+## Project Overview
 
-This repository is currently at **Step 1 only**. The full project structure, dependency files, and module placeholders are present, but the implementation has intentionally not started yet.
+Recruiters and hiring teams often need to screen many PDF resumes against a specific job description. Manual review is slow, keyword-only screening is brittle, and pure semantic matching can miss important structured signals such as education, certifications, projects, and years of experience.
 
-## Architecture
+This project solves that problem with a local AI/ML pipeline that parses PDF resumes, extracts candidate attributes, computes NLP-based semantic similarity, engineers interpretable ranking features, trains a machine learning model, and outputs a ranked candidate list.
 
-The planned pipeline follows the assessment flow:
+The goal is to demonstrate a production-quality terminal application for resume screening and ranking using NLP and machine learning. The expected outcome is `output/rankings.csv`, containing candidates sorted by predicted suitability for a selected job description.
 
-```text
-PDF Resume
-    -> Text Extraction
-    -> Resume Parsing
-    -> Feature Extraction
-    -> Sentence Embeddings
-    -> Cosine Similarity
-    -> Feature Engineering
-    -> Random Forest Regressor
-    -> Candidate Score
-    -> Ranking
-    -> rankings.csv
+## Key Highlights
+
+- ✔ Resume Parsing
+- ✔ NLP Semantic Matching
+- ✔ Feature Engineering
+- ✔ Random Forest Ranking
+- ✔ Candidate Scoring
+- ✔ Automated Testing
+- ✔ CLI Interface
+- ✔ Professional Documentation
+
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Key Highlights](#key-highlights)
+- [Project Architecture](#project-architecture)
+- [Folder Structure](#folder-structure)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [First Time Setup](#first-time-setup)
+- [Running the Project](#running-the-project)
+- [Pipeline Explanation](#pipeline-explanation)
+- [Machine Learning](#machine-learning)
+- [Evaluation](#evaluation)
+- [Example Output](#example-output)
+- [Trade-offs](#trade-offs)
+- [Future Improvements](#future-improvements)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
+
+## Project Architecture
+
+```mermaid
+flowchart TD
+    A[PDF Resume] --> B[Text Extraction]
+    B --> C[Resume Parsing]
+    C --> D[Feature Engineering]
+    E[Job Description] --> F[Job Description Parsing]
+    F --> D
+    C --> G[Sentence Embeddings]
+    F --> G
+    G --> H[Cosine Similarity]
+    H --> D
+    D --> I[Random Forest]
+    I --> J[Candidate Ranking]
+    J --> K[rankings.csv]
 ```
-
-Core responsibilities are separated by package:
-
-- `parser/`: PDF text extraction and structured resume parsing.
-- `nlp/`: Sentence Transformer embeddings and cosine similarity scoring.
-- `ml/`: synthetic data generation, feature vector construction, model training, and candidate ranking.
-- `utils/`: shared logging, file handling, and validation helpers.
-- `data/`: local input resumes, job descriptions, and generated synthetic training data.
-- `models/`: serialized trained model artifacts.
-- `output/`: generated ranking reports such as `rankings.csv`.
-- `tests/`: pytest test modules for parser, NLP, ML, and utility behavior.
 
 ## Folder Structure
 
 ```text
 resume-screening-ranking-system/
 ├── README.md
+├── LICENSE
 ├── requirements.txt
+├── requirements-lock.txt
 ├── pyproject.toml
-├── .gitignore
 ├── main.py
+├── predict_candidates.py
+├── verify_features.py
+├── Demo.ipynb
 ├── config.py
 ├── data/
 │   ├── resumes/
 │   ├── job_descriptions/
 │   └── generated/
+├── docs/
+│   ├── architecture.md
+│   ├── design_decisions.md
+│   └── tradeoffs.md
 ├── models/
 ├── output/
 ├── parser/
@@ -59,65 +94,208 @@ resume-screening-ranking-system/
 └── notebooks/
 ```
 
+## Tech Stack
+
+| Category | Tools |
+| --- | --- |
+| Language | Python 3.13 |
+| Libraries | NumPy, Pandas, Joblib, tqdm |
+| ML | scikit-learn, RandomForestRegressor |
+| NLP | spaCy, Sentence Transformers, all-MiniLM-L6-v2 |
+| Testing | pytest |
+| Utilities | PyMuPDF, argparse, logging |
+
 ## Installation
 
 ```bash
+git clone https://github.com/your-username/resume-screening-ranking-system.git
+cd resume-screening-ranking-system
 python3.13 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-The implementation will use `sentence-transformers/all-MiniLM-L6-v2` for semantic embeddings. A spaCy language model installation command will be added during the implementation step once the parser code is introduced.
-
-## Usage
-
-Usage commands will be added after implementation. The intended final entry point is:
+For exact reproducibility with the current development environment:
 
 ```bash
-python main.py
+pip install -r requirements-lock.txt
 ```
 
-The final application will write:
+## First Time Setup
+
+The project uses the Sentence Transformer model `sentence-transformers/all-MiniLM-L6-v2` for semantic matching. On first execution, Sentence Transformers automatically downloads this model once to the local Hugging Face cache. The model is approximately 90 MB.
+
+After the model is cached, the project runs completely offline from local files. No external APIs are used for parsing, scoring, training, or ranking. No resume data, job description data, or user data leaves the local machine.
+
+## Running the Project
+
+Train the Random Forest model and save `models/model.pkl`:
+
+```bash
+python main.py train
+```
+
+Rank all PDF resumes in `data/resumes/` against the default job description:
+
+```bash
+python main.py predict
+```
+
+Run a compact end-to-end demonstration:
+
+```bash
+python main.py demo
+```
+
+Verify feature vectors across all sample resumes and job descriptions:
+
+```bash
+python main.py verify
+```
+
+Run the complete automated test suite:
+
+```bash
+pytest
+```
+
+Use a specific job description:
+
+```bash
+python main.py predict --job-description data/job_descriptions/machine_learning_engineer.txt
+```
+
+## Pipeline Explanation
+
+### Resume Parsing
+
+PDF resumes are read with PyMuPDF. The parser extracts clean text across pages, then identifies candidate fields such as name, email, phone number, skills, education, certifications, projects, experience lines, and years of experience.
+
+### Feature Extraction
+
+Structured resume fields and parsed job description fields are converted into measurable candidate-job signals. These include skill overlap, education match, certification match, project relevance, programming language match, framework match, tools match, and years of experience difference.
+
+### Semantic Similarity
+
+The resume and job description are embedded using `sentence-transformers/all-MiniLM-L6-v2`. Cosine similarity is computed and clipped into the range `0.0` to `1.0`.
+
+### Feature Engineering
+
+The system combines semantic similarity with structured feature scores into a single pandas DataFrame. This feature vector is the input to the machine learning ranking model.
+
+### Machine Learning
+
+The Random Forest Regressor predicts a candidate suitability score from engineered features. It is trained on synthetic candidate-job samples generated locally.
+
+### Candidate Ranking
+
+The trained model predicts candidate scores, estimates confidence from Random Forest tree variance, sorts candidates in descending order, and writes the final ranking to `output/rankings.csv`.
+
+## Machine Learning
+
+Random Forest was selected because it performs well on tabular engineered features, handles non-linear interactions, trains quickly on a laptop, provides feature importances, and can be saved cleanly with Joblib.
+
+Synthetic data was used because no labelled resume-ranking dataset was provided with the assessment. Instead of downloading external datasets, the project generates realistic candidate-job feature vectors programmatically and labels them with a transparent weighted formula:
 
 ```text
-output/rankings.csv
+Candidate Score =
+  0.40 * Semantic Similarity
++ 0.20 * Skill Match
++ 0.15 * Experience Match
++ 0.10 * Education Match
++ 0.05 * Certification Match
++ 0.05 * Programming Language Match
++ 0.03 * Framework Match
++ 0.02 * Tools Match
 ```
 
-with the columns:
+Scores are normalized to `0-100`.
+
+## Evaluation
+
+Latest model evaluation:
 
 ```text
-Resume Name, Similarity Score, Predicted Candidate Score, Rank
+MAE: 2.9248
+RMSE: 3.7910
+R² Score: 0.9405
+5-Fold Cross Validation RMSE: 4.3016 +/- 0.4375
 ```
 
-## Model Choice
-
-The planned ranking model is a `RandomForestRegressor` from scikit-learn. This model is suitable for the assessment because it handles non-linear interactions between structured resume features, semantic similarity scores, skills overlap, education indicators, and years of experience without requiring a large real-world dataset.
-
-Sentence embeddings will be generated with `sentence-transformers/all-MiniLM-L6-v2`, a compact model that balances semantic quality, speed, and local execution.
-
-## Tradeoffs
-
-- Synthetic training data keeps the project self-contained and avoids external dataset dependencies, but it may not fully represent real hiring data distributions.
-- A Random Forest model is interpretable enough for an assessment and robust on tabular features, but it will not learn deep cross-document semantics by itself.
-- Cosine similarity provides a strong semantic baseline, while feature engineering adds domain-specific ranking signals.
-- Local-only execution improves reproducibility and privacy, but first-time model downloads may be required when dependencies are installed and models are loaded.
-
-## Future Improvements
-
-- Add robust PDF parsing with PyMuPDF.
-- Add spaCy-assisted name, education, certification, and experience parsing.
-- Generate realistic synthetic resumes and job descriptions.
-- Train and evaluate the Random Forest ranking model.
-- Add pytest coverage for parser, NLP, feature engineering, and ranking behavior.
-- Add model evaluation reports and feature importance summaries.
+| Metric | Meaning |
+| --- | --- |
+| MAE | Mean Absolute Error; average absolute difference between predicted and target scores. Lower is better. |
+| RMSE | Root Mean Squared Error; penalizes larger prediction errors more strongly. Lower is better. |
+| R² | Proportion of target-score variance explained by the model. Higher is better. |
+| Cross Validation | 5-fold validation estimates how stable model performance is across different train/test splits. |
 
 ## Example Output
 
-The final `rankings.csv` will follow this shape:
+```text
+Candidate Rankings
+ Rank Candidate Name  Similarity Score  Predicted Score
+    1     Aisha Khan            0.6699            76.01
+    2 Maria Gonzalez            0.5689            61.04
+    3    Rohan Mehta            0.5275            54.43
+    4     Nina Patel            0.4799            50.67
+    5  Liam O'Connor            0.5665            47.41
+```
 
-| Resume Name | Similarity Score | Predicted Candidate Score | Rank |
-| --- | ---: | ---: | ---: |
-| resume_001.pdf | 0.87 | 91.4 | 1 |
-| resume_002.pdf | 0.79 | 84.2 | 2 |
-| resume_003.pdf | 0.64 | 72.8 | 3 |
+Sample `output/rankings.csv`:
 
+```csv
+Rank,Candidate Name,Similarity Score,Predicted Score
+1,Aisha Khan,0.6699,76.01
+2,Maria Gonzalez,0.5689,61.04
+3,Rohan Mehta,0.5275,54.43
+4,Nina Patel,0.4799,50.67
+5,Liam O'Connor,0.5665,47.41
+```
+
+## Trade-offs
+
+### Advantages
+
+- Fully local terminal workflow after first model download.
+- Transparent feature engineering and scoring formula.
+- No Kaggle or external resume datasets required.
+- Interpretable Random Forest feature importances.
+- Clear separation between parsing, NLP, feature engineering, training, and ranking.
+
+### Limitations
+
+- Synthetic labels are useful for assessment reproducibility but do not replace real hiring feedback.
+- Regex and dictionary-based parsing may miss unusual resume layouts or uncommon skills.
+- Scanned PDFs require OCR, which is not currently implemented.
+- Embeddings are computed per resume-job pair rather than fully batched.
+
+### Future Improvements
+
+- Add OCR support for scanned resumes.
+- Improve parsing for scanned resumes and complex multi-column layouts.
+- Add batch embedding optimisation for large candidate pools.
+- Compare more ranking models such as Gradient Boosting, XGBoost, or LightGBM.
+- Fine-tune embeddings on resume and job description pairs.
+- Add LLM-assisted parsing as an optional local or offline-compatible module.
+
+## Future Improvements
+
+- OCR support for image-only PDF resumes.
+- Better handling of scanned resumes and non-standard formatting.
+- Batch embedding optimisation and embedding caching.
+- More ranking models and model comparison reports.
+- Fine-tuned embeddings for recruiting-specific language.
+- LLM-assisted parsing for richer extraction where allowed.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
+
+## Acknowledgements
+
+This project uses and acknowledges:
+
+- Sentence Transformers
+- spaCy
+- scikit-learn
+- PyMuPDF

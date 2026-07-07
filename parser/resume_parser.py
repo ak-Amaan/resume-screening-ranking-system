@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import re
+from datetime import datetime
 from functools import lru_cache
 
 try:
@@ -286,7 +287,7 @@ def extract_years_of_experience(text: str) -> float:
         flags=re.IGNORECASE,
     ):
         start_year = int(start)
-        end_year = 2026 if end.lower() == "present" else int(end)
+        end_year = datetime.now().year if end.lower() == "present" else int(end)
         if end_year >= start_year:
             ranges.append(float(end_year - start_year))
     return max(ranges, default=0.0)
