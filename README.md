@@ -8,18 +8,22 @@
 
 ## Project Overview
 
-Recruiters and hiring teams often need to screen many PDF resumes against a specific job description. Manual review is slow, keyword-only screening is brittle, and pure semantic matching can miss important structured signals such as education, certifications, projects, and years of experience.
+Recruiters and hiring teams often need to screen many PDF resumes against a specific job description. Job seekers also need a clear way to understand how a single resume aligns with a target role. Manual review is slow, keyword-only screening is brittle, and pure semantic matching can miss important structured signals such as education, certifications, projects, and years of experience.
 
-This project solves that problem with a local AI/ML pipeline that parses PDF resumes, extracts candidate attributes, computes NLP-based semantic similarity, engineers interpretable ranking features, trains a machine learning model, and outputs a ranked candidate list.
+This project solves that problem with a local AI/ML pipeline that parses PDF resumes, extracts candidate attributes, computes NLP-based semantic similarity, engineers interpretable ranking features, trains a machine learning model, outputs ranked candidate lists, and generates deterministic single-resume review reports.
 
-The goal is to demonstrate a production-quality terminal application for resume screening and ranking using NLP and machine learning. The expected outcome is `output/rankings.csv`, containing candidates sorted by predicted suitability for a selected job description.
+The goal is to demonstrate a production-quality terminal application for resume screening, ranking, and review using NLP and machine learning. Recruiter mode produces `output/rankings.csv`, containing candidates sorted by predicted suitability for a selected job description. Review mode produces `output/review_report.txt`, containing a professional recruiter-style assessment for one resume and one job description.
 
-## Key Highlights
+## Features
 
-- ✔ Resume Parsing
-- ✔ NLP Semantic Matching
+- ✔ Resume Ranking
+- ✔ Resume Review Mode
+- ✔ Deterministic Recruiter Reasoning
+- ✔ Candidate Recommendation
 - ✔ Feature Engineering
+- ✔ NLP Similarity
 - ✔ Random Forest Ranking
+- ✔ Resume Parsing
 - ✔ Candidate Scoring
 - ✔ Automated Testing
 - ✔ CLI Interface
@@ -28,17 +32,19 @@ The goal is to demonstrate a production-quality terminal application for resume 
 ## Table of Contents
 
 - [Project Overview](#project-overview)
-- [Key Highlights](#key-highlights)
+- [Features](#features)
 - [Project Architecture](#project-architecture)
 - [Folder Structure](#folder-structure)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
 - [First Time Setup](#first-time-setup)
 - [Running the Project](#running-the-project)
+- [Resume Review Report](#resume-review-report)
+- [Project Workflow](#project-workflow)
 - [Pipeline Explanation](#pipeline-explanation)
 - [Machine Learning](#machine-learning)
 - [Evaluation](#evaluation)
-- [Example Output](#example-output)
+- [Sample Outputs](#sample-outputs)
 - [Trade-offs](#trade-offs)
 - [Future Improvements](#future-improvements)
 - [License](#license)
@@ -129,19 +135,19 @@ After the model is cached, the project runs completely offline from local files.
 
 ## Running the Project
 
-Train the Random Forest model and save `models/model.pkl`:
+Train the Random Forest ranking model and save `models/model.pkl`:
 
 ```bash
 python main.py train
 ```
 
-Rank all PDF resumes in `data/resumes/` against the default job description:
+Rank all PDF resumes in `data/resumes/` against the default job description and write `output/rankings.csv`:
 
 ```bash
 python main.py predict
 ```
 
-Run a compact end-to-end demonstration:
+Run a compact end-to-end demonstration using the sample data:
 
 ```bash
 python main.py demo
@@ -151,6 +157,14 @@ Verify feature vectors across all sample resumes and job descriptions:
 
 ```bash
 python main.py verify
+```
+
+Review one PDF resume against one TXT job description and write `output/review_report.txt`:
+
+```bash
+python main.py review \
+    --resume path/to/resume.pdf \
+    --jd path/to/job_description.txt
 ```
 
 Run the complete automated test suite:
@@ -164,6 +178,24 @@ Use a specific job description:
 ```bash
 python main.py predict --job-description data/job_descriptions/machine_learning_engineer.txt
 ```
+
+## Resume Review Report
+
+Review mode evaluates a single PDF resume against a single TXT job description. It reuses the same PDF extraction, resume parsing, job description parsing, feature engineering, NLP similarity, and Random Forest scoring pipeline as the ranking workflow, but it does not rank candidates.
+
+The generated `output/review_report.txt` reads like a professional recruiter or ATS report. It includes the candidate name, job title, overall score, deterministic overall assessment, strengths, weaknesses, matched skills, missing skills, detailed feature scores, practical recommendations, and an interview recommendation.
+
+The report explanations are generated deterministically from computed feature values and parsed skill matches. No LLM is required.
+
+## Project Workflow
+
+### Recruiter Workflow
+
+Recruiters run `python main.py predict` to compare multiple PDF resumes against one job description. The system extracts resume text, parses candidate fields, parses the TXT job description, computes feature vectors and NLP similarity scores, predicts candidate suitability with the Random Forest model, and writes sorted results to `output/rankings.csv`.
+
+### Job Seeker Workflow
+
+Job seekers run `python main.py review --resume path/to/resume.pdf --jd path/to/job_description.txt` to evaluate one resume against one target role. The system computes the same feature values used for ranking, then generates `output/review_report.txt` with an overall score, strengths, weaknesses, matched skills, missing skills, recommendations, and an interview recommendation.
 
 ## Pipeline Explanation
 
@@ -190,6 +222,10 @@ The Random Forest Regressor predicts a candidate suitability score from engineer
 ### Candidate Ranking
 
 The trained model predicts candidate scores, estimates confidence from Random Forest tree variance, sorts candidates in descending order, and writes the final ranking to `output/rankings.csv`.
+
+### Recruiter Mode
+
+Recruiter mode uses `python main.py predict` to rank multiple resumes against one job description. It parses every PDF resume in the selected resume directory, computes feature vectors for each candidate, predicts suitability scores with the Random Forest model, sorts candidates by score, and saves the final table to `output/rankings.csv`.
 
 ## Machine Learning
 
@@ -229,7 +265,82 @@ R² Score: 0.9405
 | R² | Proportion of target-score variance explained by the model. Higher is better. |
 | Cross Validation | 5-fold validation estimates how stable model performance is across different train/test splits. |
 
-## Example Output
+## Sample Outputs
+
+Sample `output/review_report.txt`:
+
+```text
+Resume Review Report
+=========================================================
+
+Candidate Name
+Aisha Khan
+
+Job Title
+Data Scientist
+
+Overall Candidate Score
+76.01
+
+Overall Assessment
+Strong Match
+
+=========================================================
+
+Section 1
+Summary
+The candidate is a strong match with an overall score of 76.01. Semantic similarity is moderate at 66.99%, and skill match is 90.91%. Matched skills include Python, SQL, Machine Learning, and 7 more. No required skill gaps were identified from the parsed data.
+
+Section 2
+Strengths
+- Good semantic similarity with the job description
+- Strong match against required and preferred skills
+- High experience match for the role
+- Relevant education for the role
+- Good programming language match
+- Good framework match
+
+Section 3
+Weaknesses
+- Relevant certification match was not identified
+
+Section 4
+Matched Skills
+- Python
+- SQL
+- Machine Learning
+- Pandas
+- NumPy
+- scikit-learn
+- Statistics
+- NLP
+- AWS
+- Tableau
+
+Section 5
+Missing Skills
+None
+
+Section 6
+Detailed Scores
+Semantic Similarity: 66.99%
+Skill Match: 90.91%
+Experience Match: 100.00%
+Education Match: 100.00%
+Certification Match: 0.00%
+Programming Languages: 100.00%
+Frameworks: 100.00%
+Tools: 66.67%
+Project Relevance: 53.85%
+
+Section 7
+Recommendations
+- Highlight projects that directly use the role's key skills.
+
+Section 8
+Interview Recommendation
+Recommended
+```
 
 ```text
 Candidate Rankings
@@ -258,26 +369,35 @@ Rank,Candidate Name,Similarity Score,Predicted Score
 
 - Fully local terminal workflow after first model download.
 - Transparent feature engineering and scoring formula.
+- Deterministic explanations generated from computed feature values.
+- No LLM is required for ranking or review reports.
 - No Kaggle or external resume datasets required.
 - Interpretable Random Forest feature importances.
 - Clear separation between parsing, NLP, feature engineering, training, and ranking.
+- PDF resumes are supported.
 
 ### Limitations
 
 - Synthetic labels are useful for assessment reproducibility but do not replace real hiring feedback.
 - Regex and dictionary-based parsing may miss unusual resume layouts or uncommon skills.
 - Scanned PDFs require OCR, which is not currently implemented.
+- TXT job descriptions are currently supported.
 - Embeddings are computed per resume-job pair rather than fully batched.
 
 ### Future Improvements
 
-- Add OCR support for scanned resumes.
-- Improve parsing for scanned resumes and complex multi-column layouts.
-- Add batch embedding optimisation for large candidate pools.
-- Compare more ranking models such as Gradient Boosting, XGBoost, or LightGBM.
-- Fine-tune embeddings on resume and job description pairs.
-- Add LLM-assisted parsing as an optional local or offline-compatible module.
-
+- OCR support for image-only PDF resumes.
+- Better handling of scanned resumes and non-standard formatting.
+- PDF Job Descriptions.
+- DOCX Job Descriptions.
+- One Resume vs Many JDs.
+- ATS Keyword Optimization.
+- Optional LLM Explanation.
+- Batch Processing Improvements.
+- Skill Synonym Matching.
+- Batch embedding optimisation and embedding caching.
+- More ranking models and model comparison reports.
+- Fine-tuned embeddings for recruiting-specific language.
 
 ## License
 

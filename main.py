@@ -13,6 +13,7 @@ from predict_candidates import (
     DEFAULT_RESUME_DIR,
     predict_candidates,
 )
+from review_candidate import review_candidate
 from utils.logging_config import configure_logging
 from verify_features import main as verify_features_main
 
@@ -52,6 +53,14 @@ def verify_command(_: argparse.Namespace) -> None:
     verify_features_main()
 
 
+def review_command(args: argparse.Namespace) -> None:
+    """Generate a professional review report for one resume and one job."""
+    try:
+        review_candidate(resume_path=args.resume, job_description_path=args.jd)
+    except (FileNotFoundError, ValueError) as exc:
+        raise SystemExit(f"Error: {exc}") from None
+
+
 def build_parser() -> argparse.ArgumentParser:
     """Build the project command-line parser."""
     parser = argparse.ArgumentParser(
@@ -85,6 +94,14 @@ def build_parser() -> argparse.ArgumentParser:
         help="Print feature vectors for all sample resume/job pairs.",
     )
     verify_parser.set_defaults(func=verify_command)
+
+    review_parser = subparsers.add_parser(
+        "review",
+        help="Review one resume against one job description.",
+    )
+    review_parser.add_argument("--resume", required=True)
+    review_parser.add_argument("--jd", required=True)
+    review_parser.set_defaults(func=review_command)
     return parser
 
 
