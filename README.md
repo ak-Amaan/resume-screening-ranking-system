@@ -108,7 +108,7 @@ resume-screening-ranking-system/
 ## Installation
 
 ```bash
-git clone https://github.com/your-username/resume-screening-ranking-system.git
+git clone https://github.com/ak-Amaan/resume-screening-ranking-system.git
 cd resume-screening-ranking-system
 python3.13 -m venv .venv
 source .venv/bin/activate
