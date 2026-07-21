@@ -1,4 +1,4 @@
-# Resume Screening and Ranking System Using NLP and Machine Learning
+# Resume Screening Agent Using NLP and Machine Learning
 
 ![Python 3.13](https://img.shields.io/badge/Python-3.13-blue)
 ![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Random%20Forest-green)
@@ -278,14 +278,6 @@ Rank,Candidate Name,Similarity Score,Predicted Score
 - Fine-tune embeddings on resume and job description pairs.
 - Add LLM-assisted parsing as an optional local or offline-compatible module.
 
-## Future Improvements
-
-- OCR support for image-only PDF resumes.
-- Better handling of scanned resumes and non-standard formatting.
-- Batch embedding optimisation and embedding caching.
-- More ranking models and model comparison reports.
-- Fine-tuned embeddings for recruiting-specific language.
-- LLM-assisted parsing for richer extraction where allowed.
 
 ## License
 
